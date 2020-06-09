@@ -44,7 +44,7 @@ func getTestRampingArrivalRateConfig() RampingArrivalRateConfig {
 		BaseConfig: BaseConfig{GracefulStop: types.NullDurationFrom(1 * time.Second)},
 		TimeUnit:   types.NullDurationFrom(time.Second),
 		StartRate:  null.IntFrom(10),
-		Stages: []Stage{
+		Stages: []lib.Stage{
 			{
 				Duration: types.NullDurationFrom(time.Second * 1),
 				Target:   null.IntFrom(10),
@@ -142,7 +142,7 @@ func TestRampingArrivalRateRunCorrectRateWithSlowRate(t *testing.T) {
 	ctx, cancel, executor, logHook := setupExecutor(
 		t, RampingArrivalRateConfig{
 			TimeUnit: types.NullDurationFrom(time.Second),
-			Stages: []Stage{
+			Stages: []lib.Stage{
 				{
 					Duration: types.NullDurationFrom(time.Second * 6),
 					Target:   null.IntFrom(1),
@@ -198,7 +198,7 @@ func TestRampingArrivalRateCal(t *testing.T) {
 		defaultTimeUnit = time.Second
 		config          = RampingArrivalRateConfig{
 			StartRate: null.IntFrom(0),
-			Stages: []Stage{ // TODO make this even bigger and longer .. will need more time
+			Stages: []lib.Stage{ // TODO make this even bigger and longer .. will need more time
 				{
 					Duration: types.NullDurationFrom(time.Second * 5),
 					Target:   null.IntFrom(1),
@@ -298,7 +298,7 @@ func BenchmarkCal(b *testing.B) {
 			config := RampingArrivalRateConfig{
 				TimeUnit:  types.NullDurationFrom(time.Second),
 				StartRate: null.IntFrom(50),
-				Stages: []Stage{
+				Stages: []lib.Stage{
 					{
 						Duration: types.NullDurationFrom(t),
 						Target:   null.IntFrom(49),
@@ -334,7 +334,7 @@ func BenchmarkCalRat(b *testing.B) {
 			config := RampingArrivalRateConfig{
 				TimeUnit:  types.NullDurationFrom(time.Second),
 				StartRate: null.IntFrom(50),
-				Stages: []Stage{
+				Stages: []lib.Stage{
 					{
 						Duration: types.NullDurationFrom(t),
 						Target:   null.IntFrom(49),
@@ -370,7 +370,7 @@ func TestCompareCalImplementation(t *testing.T) {
 	config := RampingArrivalRateConfig{
 		TimeUnit:  types.NullDurationFrom(time.Second),
 		StartRate: null.IntFrom(0),
-		Stages: []Stage{
+		Stages: []lib.Stage{
 			{
 				Duration: types.NullDurationFrom(1 * time.Second),
 				Target:   null.IntFrom(200),
